@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Marquee9 — Demo</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            *,
+            *::before,
+            *::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            :root {
+                --bg: #0a0a0f;
+                --surface: #13131a;
+                --border: #1e1e2e;
+                --text: #e2e2f0;
+                --muted: #6b6b8a;
+                --accent: #7c6af7;
+                --accent2: #f76a8a;
+                --accent3: #6af7c8;
+            }
+
+            body {
+                font-family: "Inter", sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                overflow-x: hidden;
+            }
+
+            /* ── Layout ── */
+            .demo-header {
+                text-align: center;
+                padding: 5rem 2rem 4rem;
+            }
+            .demo-header h1 {
+                font-size: clamp(2.5rem, 6vw, 5rem);
+                font-weight: 900;
+                letter-spacing: -0.03em;
+                background: linear-gradient(135deg, #fff 30%, var(--accent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            .demo-header p {
+                margin-top: 1rem;
+                color: var(--muted);
+                font-size: 1.1rem;
+            }
+
+            .demo-section {
+                padding: 3rem 0;
+                border-top: 1px solid var(--border);
+            }
+
+            .demo-label {
+                padding: 0 2rem 1.25rem;
+                font-size: 0.75rem;
+                font-weight: 600;
+                letter-spacing: 0.12em;
+                text-transform: uppercase;
+                color: var(--muted);
+            }
+
+            /* ── 1. Logo ticker ── */
+            #marquee-logos {
+                background: var(--surface);
+                padding-block: 2.5rem;
+            }
+            #marquee-logos img {
+                height: 2.5rem;
+                width: auto;
+                opacity: 0.55;
+                transition: opacity 0.2s;
+            }
+            #marquee-logos a:hover img {
+                opacity: 1;
+            }
+
+            /* ── 2. Text ticker ── */
+            #marquee-text {
+                background: var(--accent);
+                padding-block: 1.1rem;
+            }
+            #marquee-text .ticker-word {
+                font-size: 1rem;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                text-transform: uppercase;
+                color: #fff;
+                white-space: nowrap;
+            }
+            #marquee-text .ticker-dot {
+                color: rgba(255, 255, 255, 0.4);
+                margin-inline: 0.4rem;
+            }
+
+            /* ── 3. Dual direction ── */
+            .dual-wrap {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            #marquee-forward,
+            #marquee-reverse {
+                padding-block: 0.75rem;
+            }
+            .tag-pill {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.55rem 1.1rem;
+                border-radius: 100px;
+                font-size: 0.875rem;
+                font-weight: 600;
+                white-space: nowrap;
+                border: 1px solid var(--border);
+                background: var(--surface);
+                color: var(--text);
+            }
+            .tag-pill .dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: var(--accent);
+                flex-shrink: 0;
+            }
+            .tag-pill.alt .dot {
+                background: var(--accent2);
+            }
+            .tag-pill.alt2 .dot {
+                background: var(--accent3);
+            }
+
+            /* ── 4. Testimonials ── */
+            #marquee-cards {
+                padding-block: 1rem;
+            }
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .card__quote {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                color: var(--text);
+            }
+            .card__author {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .card__avatar {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+                display: grid;
+                place-items: center;
+                font-size: 1rem;
+                font-weight: 700;
+                flex-shrink: 0;
+            }
+            .card__name {
+                font-size: 0.8rem;
+                font-weight: 600;
+            }
+            .card__role {
+                font-size: 0.75rem;
+                color: var(--muted);
+            }
+            .stars {
+                color: #f7c94e;
+                font-size: 0.75rem;
+                letter-spacing: 0.05em;
+            }
+
+            /* ── 5. Large text strip ── */
+            #marquee-big {
+                padding-block: 1.5rem;
+                overflow: hidden;
+            }
+            .big-word {
+                font-size: clamp(3rem, 8vw, 7rem);
+                font-weight: 900;
+                letter-spacing: -0.03em;
+                white-space: nowrap;
+                color: transparent;
+                -webkit-text-stroke: 1px var(--border);
+                transition: -webkit-text-stroke-color 0.2s;
+            }
+            .big-word:hover {
+                -webkit-text-stroke-color: var(--accent);
+            }
+
+            .demo-footer {
+                text-align: center;
+                padding: 4rem 2rem;
+                color: var(--muted);
+                font-size: 0.85rem;
+                border-top: 1px solid var(--border);
+            }
+            .demo-footer a {
+                color: var(--accent);
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        <header class="demo-header">
+            <h1>Marquee9</h1>
+            <p>Lightweight, pixel-perfect looping, dependency-free JavaScript marquee library</p>
+        </header>
+
+        <!-- ── 1. Logo ticker ── -->
+        <section class="demo-section">
+            <p class="demo-label">Logo Marquee — pause on hover, blurred edges</p>
+            <div id="marquee-logos">
+                <a href="#"><img src="https://cdn.simpleicons.org/javascript?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/python?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/kotlin?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/dart?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/r?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/swift?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/julia?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/haskell?viewbox=auto&size=20" /></a>
+                <a href="#"><img src="https://cdn.simpleicons.org/clojure?viewbox=auto&size=20" /></a>
+            </div>
+        </section>
+
+        <!-- ── 2. Text ticker ── -->
+        <section class="demo-section">
+            <p class="demo-label">Announcement banner — fast, no pause on hover</p>
+            <div id="marquee-text">
+                <span class="ticker-word">Zero dependencies <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">Responsive <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">Pause on hover <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">Blurred edges <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">CSS-powered animation <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">Auto content fill <span class="ticker-dot">·</span></span>
+                <span class="ticker-word">Destroy &amp; reinit <span class="ticker-dot">·</span></span>
+            </div>
+        </section>
+
+        <!-- ── 3. Dual direction tech stack ── -->
+        <section class="demo-section">
+            <p class="demo-label">Tech stack — two rows, opposite directions</p>
+            <div class="dual-wrap">
+                <div id="marquee-forward">
+                    <span class="tag-pill"><span class="dot"></span>JavaScript</span>
+                    <span class="tag-pill"><span class="dot"></span>TypeScript</span>
+                    <span class="tag-pill"><span class="dot"></span>React</span>
+                    <span class="tag-pill"><span class="dot"></span>Vue</span>
+                    <span class="tag-pill"><span class="dot"></span>Svelte</span>
+                    <span class="tag-pill"><span class="dot"></span>Astro</span>
+                    <span class="tag-pill"><span class="dot"></span>Next.js</span>
+                    <span class="tag-pill"><span class="dot"></span>Nuxt</span>
+                </div>
+                <div id="marquee-reverse">
+                    <span class="tag-pill alt"><span class="dot"></span>Node.js</span>
+                    <span class="tag-pill alt"><span class="dot"></span>Deno</span>
+                    <span class="tag-pill alt"><span class="dot"></span>Bun</span>
+                    <span class="tag-pill alt2"><span class="dot"></span>PostgreSQL</span>
+                    <span class="tag-pill alt2"><span class="dot"></span>Redis</span>
+                    <span class="tag-pill alt2"><span class="dot"></span>MongoDB</span>
+                    <span class="tag-pill alt"><span class="dot"></span>Docker</span>
+                    <span class="tag-pill alt"><span class="dot"></span>Kubernetes</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 4. Testimonial cards ── -->
+        <section class="demo-section">
+            <p class="demo-label">Testimonials — cards, slow speed, pause on hover</p>
+            <div id="marquee-cards">
+                <div class="card">
+                    <p class="stars">★★★★★</p>
+                    <p class="card__quote">
+                        "Dropped it into our landing page in 10 minutes. Smooth as butter and no bundle bloat."
+                    </p>
+                    <div class="card__author">
+                        <div class="card__avatar" style="background: #7c6af720; color: #7c6af7">A</div>
+                        <div>
+                            <div class="card__name">Alex R.</div>
+                            <div class="card__role">Frontend Engineer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="stars">★★★★★</p>
+                    <p class="card__quote">
+                        "Finally a marquee that actually fills the container correctly at every screen size."
+                    </p>
+                    <div class="card__author">
+                        <div class="card__avatar" style="background: #f76a8a20; color: #f76a8a">S</div>
+                        <div>
+                            <div class="card__name">Sofia M.</div>
+                            <div class="card__role">UI Designer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="stars">★★★★★</p>
+                    <p class="card__quote">
+                        "The responsive breakpoints work exactly how I'd expect. Really thoughtful API."
+                    </p>
+                    <div class="card__author">
+                        <div class="card__avatar" style="background: #6af7c820; color: #6af7c8">J</div>
+                        <div>
+                            <div class="card__name">Jordan K.</div>
+                            <div class="card__role">Full-stack Dev</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="stars">★★★★★</p>
+                    <p class="card__quote">
+                        "Used it for a client logo wall. Client loved it. I loved that I spent 15 minutes on it."
+                    </p>
+                    <div class="card__author">
+                        <div class="card__avatar" style="background: #f7c94e20; color: #f7c94e">P</div>
+                        <div>
+                            <div class="card__name">Priya L.</div>
+                            <div class="card__role">Freelance Dev</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <p class="stars">★★★★★</p>
+                    <p class="card__quote">
+                        "Blurred edges + pause on hover is such a nice touch. Our users noticed immediately."
+                    </p>
+                    <div class="card__author">
+                        <div class="card__avatar" style="background: #7c6af720; color: #7c6af7">M</div>
+                        <div>
+                            <div class="card__name">Marcus T.</div>
+                            <div class="card__role">Product Designer</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── 5. Big outlined text ── -->
+        <section class="demo-section">
+            <p class="demo-label">Decorative text strip — outlined, no pause</p>
+            <div id="marquee-big">
+                <span class="big-word">MARQUEE9</span>
+                <span class="big-word">SMOOTH</span>
+                <span class="big-word">FAST</span>
+                <span class="big-word">LIGHTWEIGHT</span>
+                <span class="big-word">OPEN SOURCE</span>
+            </div>
+        </section>
+
+        <footer class="demo-footer">
+            Marquee9 · <a href="https://github.com/dn-dev9/Marquee9" target="_blank">GitHub</a>
+        </footer>
+
+        <script type="module">
+            import Marquee9 from "./Marquee9.js";
+
+            // 1. Logo ticker
+            Marquee9.init("marquee-logos", {
+                speed: "25s",
+                gap: "4rem",
+                childWidthSettings: {
+                    childMinWidth: "4rem",
+                    childPreferedWidth: "8vw",
+                    childMaxWidth: "10rem",
+                },
+                pauseOnHover: true,
+                direction: true,
+                blurredEdges: true,
+                responsive: [{ breakpoint: 600, settings: { gap: "2rem", speed: "15s", pauseOnHover: false } }],
+            });
+
+            // 2. Text ticker
+            Marquee9.init("marquee-text", {
+                speed: "4s",
+                gap: "3rem",
+                oneLineText: true,
+                direction: true,
+                pauseOnHover: false,
+                blurredEdges: false,
+                childWidthSettings: { childrenFixedWidth: "auto" },
+            });
+
+            // 3a. Forward tech pills
+            Marquee9.init("marquee-forward", {
+                speed: "30s",
+                gap: "0.75rem",
+                childWidthSettings: { childrenFixedWidth: "auto" },
+                direction: true,
+                pauseOnHover: true,
+                blurredEdges: true,
+            });
+
+            // 3b. Reverse tech pills
+            Marquee9.init("marquee-reverse", {
+                speed: "30s",
+                gap: "0.75rem",
+                childWidthSettings: { childrenFixedWidth: "auto" },
+                direction: false,
+                pauseOnHover: true,
+                blurredEdges: true,
+            });
+
+            // 4. Testimonial cards
+            Marquee9.init("marquee-cards", {
+                speed: "40s",
+                gap: "1.25rem",
+                childWidthSettings: {
+                    childMinWidth: "16rem",
+                    childPreferedWidth: "28vw",
+                    childMaxWidth: "22rem",
+                },
+                direction: true,
+                pauseOnHover: true,
+                blurredEdges: true,
+                responsive: [{ breakpoint: 600, settings: { speed: "25s", blurredEdges: false } }],
+            });
+
+            // 5. Big outlined text
+            Marquee9.init("marquee-big", {
+                speed: "20s",
+                gap: "3rem",
+                childWidthSettings: { childrenFixedWidth: "auto" },
+                direction: true,
+                pauseOnHover: false,
+                blurredEdges: false,
+            });
+        </script>
+    </body>
+</html>
