@@ -2,6 +2,7 @@
 
 A lightweight, zero-dependency JavaScript library for creating smooth, glitch-free infinite marquees. No jump, no stutter on loop — just buttery-smooth scrolling.
 
+**[View Demo →](https://dn-dev9.github.io/Marquee9/)**
 ---
 
 ## Features
