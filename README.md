@@ -24,7 +24,7 @@ A lightweight, zero-dependency JavaScript library for creating smooth, glitch-fr
 
 ```html
 <script type="module">
-    import Marquee9 from "https://cdn.jsdelivr.net/gh/yourusername/marquee9@latest/marquee.js";
+    import Marquee9 from "https://cdn.jsdelivr.net/gh/dn-dev9/marquee9@latest/Marquee.js";
 </script>
 ```
 
@@ -34,7 +34,7 @@ Download `marquee.js` and import it locally:
 
 ```html
 <script type="module">
-    import Marquee9 from "./marquee.js";
+    import Marquee9 from "./Marquee.js";
 </script>
 ```
 
